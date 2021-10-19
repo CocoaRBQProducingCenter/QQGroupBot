@@ -47,12 +47,16 @@
     <OutDir>$(SolutionDir)\..\..\out\</OutDir>
     <IntDir>$(SolutionDir)\..\..\build\</IntDir>
     <TargetName>$(ProjectName)</TargetName>
+    <LibraryPath>$(ProjectDir)\..\..\others\lib\Win32\static\Debug;$(ProjectDir)\..\..\others\lib\Win32\dynamic;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\..\..\others\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)out\</OutDir>
-    <IntDir>$(SolutionDir)build\</IntDir>
+    <OutDir>$(SolutionDir)\..\..\out\</OutDir>
+    <IntDir>$(SolutionDir)\..\..\build\</IntDir>
     <TargetName>$(ProjectName)</TargetName>
+    <LibraryPath>$(ProjectDir)\..\..\others\lib\Win32\static\Release;$(ProjectDir)\..\..\others\lib\Win32\dynamic\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\..\..\others\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -86,7 +90,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ModuleDefinitionFile>$(SolutionDir)def\config.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>$(SolutionDir)\..\..\def\config.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

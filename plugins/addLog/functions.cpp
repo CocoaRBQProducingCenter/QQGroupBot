@@ -682,7 +682,7 @@ void Clear(int64_t ac, int64_t Obj, int64_t fromGroup, const char* DelCount, int
 	SendResult(ac, fromGroup, Count, SyscallMsg[7]);
 }
 
-void AnalisisCall(int64_t ac, int64_t fromGroup, string& Call)
+void AnalisisCall(int64_t ac, string& Call)
 {
 	string path;
 	if (Call.find(JPath["Symbol_rec"]) + 1)

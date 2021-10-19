@@ -54,6 +54,12 @@
     <ClCompile Include="plugin.cc">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\base64.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\HttpPost.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\sdk\api\api.h">
@@ -135,6 +141,12 @@
       <Filter>Plugin</Filter>
     </ClInclude>
     <ClInclude Include="functions.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\base64.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\HttpPost.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

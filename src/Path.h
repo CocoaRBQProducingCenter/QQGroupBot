@@ -40,6 +40,20 @@ extern nlohmann::json JPath;
 #define EventPath(groupid) _InfoDataPath(groupid,true).append(JPath["Event"])
 #define GroupOptionsPath(groupid) _InfoDataPath(groupid,true).append(JPath["GroupOptList"])
 
+#define CardDataPath string(JPath["RobotRoot"]).append(JPath["CardData"])
+#define CardImagePath string(JPath["RobotRoot"]).append(JPath["CardImage"]) 
+#define CardSetDataPath(GamePath) CardDataPath.append(GamePath).append("\\").append(JPath["CardSet"])
+#define ClassRatePath(GamePath) CardDataPath.append(GamePath).append("\\").append(JPath["ClassRate"])
+#define CardPositionPath(GamePath) CardImagePath.append(GamePath).append("\\").append(JPath["Position"])
+#define CardAccountPath(GamePath) CardDataPath.append(GamePath).append("\\").append(JPath["CardAccount"])
+#define CardClassDataPath(GamePath) CardDataPath.append(GamePath).append("\\").append(JPath["CardClass"])
+#define GroupCardSpPath(fromGroup,GamePath) _InfoDataPath(fromGroup,true).append(GamePath).append(JPath["Gachas"]["spexp"])
+
+#define ImageDataPath string(JPath["RobotRoot"]).append(JPath["Bin"]).append(JPath["ImageData"])
+#define RecDataPath string(JPath["RobotRoot"]).append(JPath["Bin"]).append(JPath["RecData"])
+
+#define SpGroupDataPath(groupid,otherpath) string(JPath["RobotRoot"]).append(JPath["spGroupData"]).append(to_string(groupid)).append("\\").append(otherpath)
+
 #define AT_QQ(qqid) string(JPath["AT_QQ"]).append(to_string(qqid)).append(JPath["CodeEnd"]).append("\n")
 
 #define NewFolder(path) string("md \"").append(__UTA(path)).append("\"")	//创建文件夹命令行
@@ -48,3 +62,4 @@ extern nlohmann::json JPath;
 #define syscopy(sour,dest) system(((string)("copy /Y \"")).append(__UTA(sour)).append("\" \"").append(__UTA(dest)).append("\"").c_str())	//将sour复制到dest
 
 bool ReadPathFromJson(std::string);
+
