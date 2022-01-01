@@ -44,7 +44,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\..\..\out\</OutDir>
+    <OutDir>$(SolutionDir)\..\..\out\Debug\x86</OutDir>
     <IntDir>$(SolutionDir)\..\..\build\</IntDir>
     <TargetName>$(ProjectName)</TargetName>
     <LibraryPath>$(ProjectDir)\..\..\others\lib\Win32\static\Debug;$(ProjectDir)\..\..\others\lib\Win32\dynamic;$(LibraryPath)</LibraryPath>
@@ -52,7 +52,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\..\..\out\</OutDir>
+    <OutDir>$(SolutionDir)\..\..\out\Release\x86</OutDir>
     <IntDir>$(SolutionDir)\..\..\build\</IntDir>
     <TargetName>$(ProjectName)</TargetName>
     <LibraryPath>$(ProjectDir)\..\..\others\lib\Win32\static\Release;$(ProjectDir)\..\..\others\lib\Win32\dynamic\Release;$(LibraryPath)</LibraryPath>
