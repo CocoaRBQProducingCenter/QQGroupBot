@@ -15,7 +15,7 @@
     <ProjectGuid>{39CF8F0A-1DD1-44A7-B867-A48E5E106B79}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>me.xlz.functions.gachas</ProjectName>
+    <ProjectName>me.xlz.system.timer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -91,7 +91,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>$(SolutionDir)\..\..\def\config.def</ModuleDefinitionFile>
-      <AdditionalDependencies>opencv_core320.lib;opencv_imgcodecs320.lib;opencv_imgproc320.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -106,8 +105,6 @@
     <ClCompile Include="..\..\src\sdk\encoding\encoding.cc" />
     <ClCompile Include="..\..\src\sdk\sdk.cc" />
     <ClCompile Include="functions.cpp" />
-    <ClCompile Include="KiraFan.cpp" />
-    <ClCompile Include="MakeKFImage.cpp" />
     <ClCompile Include="plugin.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +135,6 @@
     <ClInclude Include="..\..\src\sdk\utils\types.h" />
     <ClInclude Include="..\..\src\sdk\utils\utils-inl.h" />
     <ClInclude Include="functions.h" />
-    <ClInclude Include="KiraFan.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
