@@ -6,8 +6,6 @@
 #include <fstream>
 #include <iostream>
 #include "functions.h"
-#include <sys/timeb.h>
-
 
 using namespace std;
 
@@ -17,39 +15,22 @@ using namespace std;
 // 插件信息 请注意最后一行末尾是不能有多余逗号
 const char *Configuration = R"CFG(
 {
-    "插件名称": "AddLog&DetectBanWords&Undo",
+    "插件名称": "Ban",
     "插件作者": "Cocoa",
-    "插件版本": "1.0.3.210202",
-    "插件说明": "添加日志\n敏感词检测\n撤回或查看撤回消息",
+    "插件版本": "1.0.1-220102",
+    "插件说明": "禁言相关，除敏感词检测",
     "所需权限":
     {
         "输出日志": "<这里填写申请理由>",
-        "发送好友消息": "与好友互动",
         "发送群消息": "与群成员互动",
-        "发送群临时消息": "与群成员单独互动",
-        "取好友列表": "测试用",
-        "取群列表": "测试用",
-        "取群成员列表": "测试用",
-        "取管理层列表":"",
-        "上传群图片":"",
-        "上传群语音":"",
-        "上传群文件":"",
         "强制取昵称":"",
         "取框架QQ":"",
         "取群名片":"",
         "禁言群成员":"",
         "退群":"",
-        "解散群":"",
         "全员禁言":"",
-        "撤回消息_群聊":"",
-        "撤回消息_私聊本身":"",
-        "QQ点赞":"",
         "删除群成员":"",
-        "设置群名片":"",
-        "设置管理员":"",
-        "群权限_匿名聊天":"",
-        "设置专属头衔":"",
-        "取图片下载地址":""
+        "取管理层列表":""
     }
 }
 )CFG";
@@ -59,6 +40,7 @@ const char *Configuration = R"CFG(
 // 私聊消息事件
 EventProcessEnum OnPrivateMessage(PrivateMessageData data)
 {
+    return EventProcessEnum::Block;
     // 判断是否是长消息自动分片的片段内容（序列从0开始）
     if (data.MessageClipID > 0 && data.MessageClip + 1 != data.MessageClipCount)
     {
@@ -97,28 +79,12 @@ EventProcessEnum OnPrivateMessage(PrivateMessageData data)
         // 不处理其他消息
         return EventProcessEnum::Ignore;
     }
+
     std::string content = data.MessageContent;
     std::string ret;
     // 判断消息内容
-
-    // 判断有没有要回复的消息
-    if (ret.empty())
-    {
-        return EventProcessEnum::Ignore;
-    }
-      
-    // 根据不同的消息来源调用不同的发送信息函数
-    if (data.MessageType == MessageTypeEnum::FriendUsualMessage)
-    {
-        api->SendFriendMessage(data.ThisQQ, data.SenderQQ, ret);
-    }
-    else if (data.MessageType == MessageTypeEnum::Temporary)
-    {
-        api->SendGroupTemporaryMessage(data.ThisQQ, data.MessageGroupQQ, data.SenderQQ, ret);
-    }
-
     // 已经处理过的消息返回Block阻止其他插件继续处理
-    return EventProcessEnum::Ignore;
+    return EventProcessEnum::Block;
 }
 
 // 群消息事件
@@ -140,31 +106,34 @@ EventProcessEnum OnGroupMessage(GroupMessageData data)
     // 判断是否是长消息自动分片的片段内容（序列从0开始）
     if (data.MessageClipID > 0 && data.MessageClip + 1 != data.MessageClipCount)
     {
-        api->OutputLog("addlog msg_clip Ignore");
         // 不处理长消息自动分片的片段内容
+        return EventProcessEnum::Ignore;
+    }
+
+    // 判断是否是自己发送的消息
+    if (data.ThisQQ == data.SenderQQ)
+    {
+        // 不处理自己发送的消息
         return EventProcessEnum::Ignore;
     }
 
     // 判断消息类型，只处理普通群聊信息
     if (data.MessageType != MessageTypeEnum::GroupUsualMessage)
     {
-        api->OutputLog("addlog msg_type Ignore");
         // 不处理其他消息
         return EventProcessEnum::Ignore;
     }
-    timeb t;
-    ftime(&t);
+
     // 判断消息内容
-    api->OutputLog("Plugin_Addlog start process msg");
-    int res = RecieveMessage(data.ThisQQ, t.time * 1000 + t.millitm, data.MessageRandom, data.MessageReq, data.MessageGroupQQ, data.SenderQQ, UnescapeUTF8(data.MessageContent).c_str(), "");
-    api->OutputLog("Plugin_Addlog finish process msg");
+    api->OutputLog("Plugin_Ban start process msg");
+    int res = RecieveMessage(data.ThisQQ, data.MessageGroupQQ, data.SenderQQ, UnescapeUTF8(data.MessageContent).c_str());
+    api->OutputLog("Plugin_Ban finish process msg");
     if (res)
     {
-        // 已经处理过的消息阻止其他插件继续处理
         return EventProcessEnum::Block;
     }
 
-    // 未处理过的消息
+    // 已经处理过的消息阻止其他插件继续处理
     return EventProcessEnum::Ignore;
 }
 
@@ -292,16 +261,10 @@ EventProcessEnum OnEvent(EventData data)
             break;
         // 群事件_某人被取消管理
         case EventTypeEnum::Group_AdministratorTook:
-        {
-            JPath["Adlist"][to_string(data.SourceGroupQQ)] = api->GetAdministratorList(data.ThisQQ, data.SourceGroupQQ);
             break;
-        }
         // 群事件_某人被赋予管理
         case EventTypeEnum::Group_AdministratorGave:
-        {
-            JPath["Adlist"][to_string(data.SourceGroupQQ)] = api->GetAdministratorList(data.ThisQQ, data.SourceGroupQQ);
             break;
-        }
         // 群事件_开启全员禁言
         case EventTypeEnum::Group_EnableAllShutUp:
             break;
