@@ -53,6 +53,8 @@ extern nlohmann::json JPath;
 #define RecDataPath string(JPath["RobotRoot"]).append(JPath["Bin"]).append(JPath["RecData"])
 
 #define SpGroupDataPath(groupid,otherpath) string(JPath["RobotRoot"]).append(JPath["spGroupData"]).append(to_string(groupid)).append("\\").append(otherpath)
+#define VoteDataPath(groupid) _InfoDataPath(groupid,true).append(JPath["VoteData"])
+#define BanListPath(groupid) _InfoDataPath(groupid,true).append(JPath["BanList"])
 
 #define AT_QQ(qqid) string(JPath["AT_QQ"]).append(to_string(qqid)).append(JPath["CodeEnd"]).append("\n")
 
